@@ -5,7 +5,9 @@
 		"moduleResolution": "node",
 		"noImplicitAny": false,
 		"sourceMap": false,
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"lib": ["ES2017"]
 	},
 	"exclude": ["node_modules"]
 }
