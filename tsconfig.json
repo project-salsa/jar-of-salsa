@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es2020",
-        "moduleResolution": "node",
-        "noImplicitAny": false,
-        "sourceMap": false,
-        "allowSyntheticDefaultImports": true
-    },
-    "exclude": ["node_modules"]
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es2020",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
+		"sourceMap": false,
+		"allowSyntheticDefaultImports": true
+	},
+	"exclude": ["node_modules"]
 }
