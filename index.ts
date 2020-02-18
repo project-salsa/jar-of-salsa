@@ -7,7 +7,10 @@ let generalChannel: Discord.TextChannel;
 let commandManager: CommandManager;
 
 client.once("ready", () => {
-	commandManager = new CommandManager(client.user!.id);
+	commandManager = new CommandManager(
+		client.user!.id,
+		process.env.CUSTOM_COMMANDS_FILEPATH ?? "./commands.json"
+	);
 	client.channels
 		.fetch(GENERAL_CHANNEL_ID)
 		.then(chan => {

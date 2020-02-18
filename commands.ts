@@ -25,7 +25,7 @@ export default class CommandManager {
 	customCommands: CustomCommandCollection = {};
 	jsonParser: JSONInterface;
 
-	constructor(botID: string) {
+	constructor(botID: string, commandsFilename: string) {
 		this.botID = botID;
 		// Grab all commands
 		// these are just test ones for now
@@ -35,7 +35,7 @@ export default class CommandManager {
 		this.commands["removecommand"] = {
 			onCall: (message, args) => this.removeCommand(message, args)
 		};
-		this.jsonParser = new JSONParser("commands.json");
+		this.jsonParser = new JSONParser(commandsFilename);
 		// Grab commands from the JSON file, if any
 		const commandJSON: any = this.jsonParser.ReadFromJSON();
 		for (const [commandName, commandData] of Object.entries(commandJSON)) {
