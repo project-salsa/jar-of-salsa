@@ -1,5 +1,6 @@
 import * as Discord from "discord.js";
 import { default as JSONInterface, default as JSONParser } from "./json_parser";
+import { duckSearch } from "./search"
 
 export interface Command {
 	onCall: (message: Discord.Message, args: string[]) => void;
@@ -34,6 +35,9 @@ export default class CommandManager {
 		};
 		this.commands["removecommand"] = {
 			onCall: (message, args) => this.removeCommand(message, args)
+		};
+		this.commands["s"] = {
+			onCall: (message, args) => this.searchCommand(message, args)
 		};
 		this.jsonParser = new JSONParser(commandsFilename);
 		// Grab commands from the JSON file, if any
@@ -78,6 +82,32 @@ export default class CommandManager {
 		delete this.customCommands[cmdName];
 		this.jsonParser.WriteToJSON(this.customCommands);
 		message.channel.send(`Successfully deleted command ${cmdName}`);
+	}
+
+	searchCommand(message: Discord.Message, ...query) {
+		const queryString = query[0].join(" ")
+		duckSearch(queryString).then(result => {
+			console.log("DuckDuckGo API result: ", result)
+			// TODO add a formatted response that change based on the Type
+			let response = "No results found"
+			if (["D"].includes(result.Type)) {
+				response = 
+				`${result.RelatedTopics[0].Text}
+${result.RelatedTopics[0].FirstURL}
+				`;
+			}
+			if (["A", "C"].includes(result.Type)) {
+				response = result.AbstractURL;
+			}
+			if (result.Redirect && result.Redirect != "") {
+				response = result.Redirect;
+			}
+			console.log(response)
+			message.channel.send(response);
+		}).catch(err => {
+			console.log("Error from API call: ", err)
+			message.channel.send("There was an error in your search.")
+		});	
 	}
 
 	/**
