@@ -25,7 +25,7 @@ export default class CommandManager {
 	commands: CommandCollection = {};
 	customCommands: CustomCommandCollection = {};
 	jsonParser: JSONInterface;
-	cmdNameRegex = new RegExp('[A-Za-z0-9]+')
+	cmdNameRegex = new RegExp('^[A-Za-z0-9]+$')
 	constructor(botID: string, commandsFilename: string) {
 		this.botID = botID;
 		// Grab all commands
