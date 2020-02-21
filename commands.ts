@@ -1,6 +1,7 @@
 import * as Discord from "discord.js";
 import { default as JSONInterface, default as JSONParser } from "./json_parser";
 import { duckSearch } from "./search"
+import { Cat, Dog} from "./catdog"
 
 export interface Command {
 	onCall: (message: Discord.Message, args: string[]) => void;
@@ -38,6 +39,12 @@ export default class CommandManager {
 		};
 		this.commands["s"] = {
 			onCall: (message, args) => this.searchCommand(message, args)
+		};
+		this.commands["meow"] = {
+			onCall: (message) => this.animalCommand("cat", message)
+		};
+		this.commands["woof"] = {
+			onCall: (message) => this.animalCommand("dog", message)
 		};
 		this.jsonParser = new JSONParser(commandsFilename);
 		// Grab commands from the JSON file, if any
@@ -108,6 +115,21 @@ ${result.RelatedTopics[0].FirstURL}
 			console.log("Error from API call: ", err)
 			message.channel.send("There was an error in your search.")
 		});	
+	}
+
+	animalCommand(animal: "cat" | "dog", message: Discord.Message) {
+		const callback = result => {
+			message.channel.send(result.message, { files: [ result.image_url ] } )
+		}
+		const err_func =  err => {
+			console.log(err);
+			message.channel.send(`There was a problem grabbing your ${animal}!`)
+		};
+		if (animal === "cat") {
+			Cat.getPic(message.author.username).then(callback).catch(err_func)
+		} else if (animal === "dog") {
+			Dog.getPic(message.author.username).then(callback).catch(err_func)
+		}
 	}
 
 	/**

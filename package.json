@@ -8,6 +8,7 @@
 		"discord.js": "discordjs/discord.js",
 		"dotenv": "^8.2.0",
 		"node-duckduckgo": "^2.0.9",
+		"r2": "^2.0.1",
 		"typescript": "^3.7.5"
 	},
 	"scripts": {
