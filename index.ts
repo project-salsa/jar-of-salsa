@@ -2,7 +2,7 @@ import * as Discord from "discord.js";
 import CommandManager from "./commands";
 const client = new Discord.Client();
 
-const GENERAL_CHANNEL_ID = "679113759188582478";
+const GENERAL_CHANNEL_ID = "439847766454173697";
 let generalChannel: Discord.TextChannel;
 let commandManager: CommandManager;
 
@@ -16,7 +16,7 @@ client.once("ready", () => {
 		.then(chan => {
 			if (chan.type === "text") {
 				generalChannel = chan as Discord.TextChannel;
-				generalChannel.send("🤖 COMPUTRON IS HERE 🤖");
+				generalChannel.send("🤖 COMPUTRON HAS BEEN UPDATED 🤖");
 			}
 		})
 		.catch(err => console.error(err));
